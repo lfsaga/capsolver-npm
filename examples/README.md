@@ -9,3 +9,5 @@ Test success rate (with PM2)
     - `pm2 start examples/pm2/ecosystem.config.js --only=recaptchav3enterpriseproxyless,recaptchav2enterpriseproxyless`
     - `pm2 delete all`.
 4. Print logs for all process: `pm2 log`.
+
+![alt text](image.png)
