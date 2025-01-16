@@ -109,7 +109,7 @@ await solver.funcaptchaclassification({ websiteURL: null, websiteKey: null, imag
 
 ```javascript
 await solver.geetest({ websiteURL, gt: null, challenge: null, proxy, geetestApiServerSubdomain: null, captchaId: null });
-await solver.geetest_proxyless({ websiteURL, gt: null, challenge: null, captchaId: null, geetestApiServerSubdomain: null });
+await solver.geetestproxyless({ websiteURL, gt: null, challenge: null, captchaId: null, geetestApiServerSubdomain: null });
 ```
 
 [***Solving datadome***](https://docs.capsolver.com/guide/antibots/datadome.html)
