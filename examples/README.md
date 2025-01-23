@@ -4,11 +4,11 @@
 
 1. do `npm install`
 2. copy-paste `.env.example` to `.env`
-3. add `APIKEY` and `PROXYSTRING` (proxy format `ip:port:user:pass`)
+3. set `APIKEY` and `PROXYSTRING` (proxy format `ip:port:user:pass`)
 
 ### usage
 
-- run all sequentially: `./run-tests.sh`
+- run all sequentially: `./all.sh`
 - run single: (copy-paste from below)
   - `npm run test:balance`
   - `npm run test:custom-task`
@@ -32,3 +32,11 @@
   - `npm run test:recatpchav2proxyless`
   - `npm run test:recatpchav3`
   - `npm run test:recatpchav3proxyless`
+
+### stress test
+
+- start multiple stress tests `pm2 start pm2/ecosystem.config.js --only=geetestv3,geetestv4`
+- to monit: `pm2 monit`
+  ![alt text](image.png)
+
+- to stop: `pm2 delete all`
