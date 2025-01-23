@@ -1,0 +1,35 @@
+{
+  "name": "capsolver-npm-examples",
+  "private": true,
+  "scripts": {
+    "test:balance": "ts-node balance.ts",
+    "test:custom-task": "ts-node custom-task/example.ts",
+    "test:anticloudflare": "ts-node anticloudflare.ts",
+    "test:antiturnstile": "ts-node antiturnstile.ts",
+    "test:antiturnstileproxyless": "ts-node antiturnstile_proxyless.ts",
+    "test:datadome": "ts-node datadome.ts",
+    "test:img2txt": "ts-node img2txt.ts",
+    "test:mtcaptcha": "ts-node mtcaptcha.ts",
+    "test:funcaptchaclassification": "ts-node funcaptcha/funcaptcha_classification.ts",
+    "test:funcaptcha": "ts-node funcaptcha/funcaptcha.ts",
+    "test:funcaptchaproxyless": "ts-node funcaptcha/funcaptcha_proxyless.ts",
+    "test:geetestv3": "ts-node geetest/v3/geetest.ts",
+    "test:geetestv3proxyless": "ts-node geetest/v3/geetest_proxyless.ts",
+    "test:geetestv4": "ts-node geetest/v4/geetest.ts",
+    "test:geetestv4proxyless": "ts-node geetest/v4/geetest_proxyless.ts",
+    "test:hcaptcha": "ts-node hcaptcha/hcaptcha.ts",
+    "test:hcaptchaclassification": "ts-node hcaptcha/hcaptcha_classification.ts",
+    "test:hcaptchaproxyless": "ts-node hcaptcha/hcaptcha_proxyless.ts",
+    "test:recatpchav2": "ts-node recaptcha/v2/recaptchav2.ts",
+    "test:recatpchav2proxyless": "ts-node recaptcha/v2/recaptchav2_proxyless.ts",
+    "test:recatpchav3": "ts-node recaptcha/v3/recaptchav3.ts",
+    "test:recatpchav3proxyless": "ts-node recaptcha/v3/recaptchav3_proxyless.ts"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

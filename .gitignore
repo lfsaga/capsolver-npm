@@ -1,3 +1,5 @@
+coverage
+dist
 .env
 .vscode
 package-lock.json

@@ -1,13 +1,34 @@
-Test success rate (with PM2)
--
+# capsolver-npm-examples
 
-- **Run multiple tests, over a challenge, to perform see the success rate.**
+### steps
 
-1. Install pm2 globally:  `npm install -g pm2`.
-2. Navigate to `capsolver-npm` root directory.
-3. Control processes:
-    - `pm2 start examples/pm2/ecosystem.config.js --only=recaptchav3enterpriseproxyless,recaptchav2enterpriseproxyless`
-    - `pm2 delete all`.
-4. Print logs for all process: `pm2 log`.
+1. do `npm install`
+2. copy-paste `.env.example` to `.env`
+3. add `APIKEY` and `PROXYSTRING` (proxy format `ip:port:user:pass`)
 
-![alt text](image.png)
+### usage
+
+- run all sequentially: `./run-tests.sh`
+- run single: (copy-paste from below)
+  - `npm run test:balance`
+  - `npm run test:custom-task`
+  - `npm run test:anticloudflare`
+  - `npm run test:antiturnstile`
+  - `npm run test:antiturnstileproxyless`
+  - `npm run test:datadome`
+  - `npm run test:img2txt`
+  - `npm run test:mtcaptcha`
+  - `npm run test:funcaptchaclassification`
+  - `npm run test:funcaptcha`
+  - `npm run test:funcaptchaproxyless`
+  - `npm run test:geetestv3`
+  - `npm run test:geetestv3proxyless`
+  - `npm run test:geetestv4`
+  - `npm run test:geetestv4proxyless`
+  - `npm run test:hcaptcha`
+  - `npm run test:hcaptchaclassification`
+  - `npm run test:hcaptchaproxyless`
+  - `npm run test:recatpchav2`
+  - `npm run test:recatpchav2proxyless`
+  - `npm run test:recatpchav3`
+  - `npm run test:recatpchav3proxyless`
