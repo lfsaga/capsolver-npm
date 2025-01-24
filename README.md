@@ -1,48 +1,47 @@
-# capsolver.com api wrapper🧠
+# capsolver api wrapper🧠
 
-- **Manage to solve captcha challenges with AI in a NodeJS app (captcha service based).**
+manage to solve captcha challenges with node
+
 - ❗ An API key it's **required**. [**Get here.**](https://dashboard.capsolver.com/passport/register?inviteCode=CHhA_5os)
-- 👀 **Puppeteer-extra integration at**  [**puppeteer-extra-plugin-capsolver**](https://github.com/0qwertyy/puppeteer-extra-plugin-capsolver).
 
-🔥 *Promise based* 🔥 *Catch TaskException with error code and description* 
+🔥 _TypeScript_ 🔥 _Promise based_ 🔥 _Catch TaskException with error code and description_
 
 [![](https://img.shields.io/badge/2.0.2-capsolver--npm-darkgreen?logo=npm&logoColor=white)](https://www.npmjs.com/package/capsolver-npm)
 [![](https://img.shields.io/badge/documentation-docs.capsolver.com-darkgreen)](https://docs.capsolver.com/guide/getting-started.html)
 
 # ⬇️ Install
+
 `npm i capsolver-npm`
 
 # ✋ Usage
 
-
 ❗ You need to debug each website and the captcha use case, in order to adjust the correct implementation parameters.
 
 - Initialize `Solver` :
-```javascript
-const { Solver } = require("capsolver-npm");
-const solver = new Solver("CAP-XXXXXX ...");  // one solver by apikey
+
+```typescript
+const { Solver } = require('capsolver-npm');
+const solver = new Solver('CAP-XXXXXX ...'); // one solver by apikey
 ```
 
-- Handle any `api.capsolver.com` supported task.
-
+- Handle capsolver tasks.
 
 # 📚 Docs
 
-
 **Request a custom tasks (in case this lib doesn't support it yet):**
 
-- It's possible to specify the task type within the JSON object and add the rest of parameters using `.runCustomTaskType({})`.
+- It's possible to custom a task with `.task({})`.
 - `mustPoll` indicates if this task requires to poll the solution after create the task.
-- When using proxy-required tasks, add your proxy connection matching the following:      
-    - `{ proxy: "ip:port:user:pass", ... parameters }`
+- When using proxy-required tasks, add your proxy connection matching the following:
+  - `{ proxy: "ip:port:user:pass", ... parameters }`
 
-```javascript
+```typescript
 const { Solver } = require("capsolver-npm");
 
 const solver = new Solver("CAP-XXXXXX ...");
-await solver.runCustomTaskType({ 
+await solver.task({
     task: {
-        type: "AkamaiTask", // suppose this task exists at docs.capsolver.com
+        type: "AkamaiTask", // suppose this exists at docs.capsolver.com
         proxy: "ip:port:user:pass" // custom proxy usage
         ... parameters
     }
@@ -53,26 +52,26 @@ await solver.runCustomTaskType({
 ```
 
 - Check the balance with `.balance()`.
-```javascript
-if(await solver.balance() < 5.00){
-    console.log("Your CapSolver balance is under 5 USD")
+
+```typescript
+if ((await solver.balance()) < 5.0) {
+  console.log('capsolver balance under 5 USD');
 }
 ```
 
-📁 Working examples
--
+## 📁 Working examples
 
 **Figure out [here](https://github.com/0qwertyy/capsolver-npm/tree/master/examples).**
 
-🔨 Native methods
--
+## 🔨 Native methods
 
-- Parameters that have a `null` by default are optional sometimes, it depends on implementation.
-- Read the *"Solving ..."* docs.
+- Parameters that have a `null` by default are optionals, it depends on implementation.
+- Read the _"Solving ..."_ docs for further information.
+
 
 [***Solving recaptchav2***](https://docs.capsolver.com/guide/captcha/ReCaptchaV2.html)
 
-```javascript
+```typescript
 await solver.recaptchav2({ websiteURL, websiteKey, proxy, pageAction: null, enterprisePayload: null, isInvisible: false, apiDomain: null, userAgent: null, cookie: null });
 await solver.recaptchav2proxyless({ websiteURL, websiteKey, pageAction: null, enterprisePayload: null, isInvisible: false, apiDomain: null, userAgent: null, cookie: null });
 await solver.recaptchav2enterprise({ websiteURL, websiteKey, proxy, pageAction: null, enterprisePayload: null, isInvisible: false, apiDomain: null, userAgent: null, cookie: null });
@@ -81,7 +80,7 @@ await solver.recaptchav2enterpriseproxyless({ websiteURL, websiteKey, pageAction
 
 [***Solving recaptchav3***](https://docs.capsolver.com/guide/captcha/ReCaptchaV3.html)
 
-```javascript
+```typescript
 await solver.recaptchav3({ websiteURL, websiteKey, proxy, pageAction, enterprisePayload: null, apiDomain: null, userAgent: null, cookies: null });
 await solver.recaptchav3proxyless({ websiteURL, websiteKey, pageAction, enterprisePayload: null, apiDomain: null, userAgent: null, cookies: null });
 await solver.recaptchav3enterprise({ websiteURL, websiteKey, proxy, pageAction, enterprisePayload: null, apiDomain: null, userAgent: null, cookies: null });
@@ -89,17 +88,15 @@ await solver.recaptchav3enterpriseproxyless({ websiteURL, websiteKey, pageAction
 ```
 
 [***Solving hcaptcha***](https://docs.capsolver.com/guide/captcha/HCaptcha.html)
-```javascript
+```typescript
 await solver.hcaptcha({ websiteURL, websiteKey, proxy, isInvisible: null, enterprisePayload: null, userAgent: null })
 await solver.hcaptchaproxyless({ websiteURL, websiteKey, isInvisible: null, enterprisePayload: null, userAgent: null })
-
-// under manteniance at 27-07-2024
 await solver.hcaptchaclassification({ websiteURL: null, websiteKey: null, queries, question })
 ```
 
 [***Solving funcaptcha***](https://docs.capsolver.com/guide/captcha/FunCaptcha.html)
 
-```javascript
+```typescript
 await solver.funcaptcha({ websiteURL, websitePublicKey, data: null, userAgent: null, proxy });
 await solver.funcaptchaproxyless({ websiteURL, websitePublicKey, data: null, userAgent: null })
 await solver.funcaptchaclassification({ websiteURL: null, websiteKey: null, images, module: null, question });
@@ -107,38 +104,37 @@ await solver.funcaptchaclassification({ websiteURL: null, websiteKey: null, imag
 
 [***Solving geetest V3 & V4***](https://docs.capsolver.com/guide/captcha/Geetest.html)
 
-```javascript
+```typescript
 await solver.geetest({ websiteURL, gt: null, challenge: null, proxy, geetestApiServerSubdomain: null, captchaId: null });
 await solver.geetestproxyless({ websiteURL, gt: null, challenge: null, captchaId: null, geetestApiServerSubdomain: null });
 ```
 
-[***Solving datadome***](https://docs.capsolver.com/guide/antibots/datadome.html)
+[***Solving datadome***](https://docs.capsolver.com/en/guide/captcha/datadome/)
 
-```javascript
+```typescript
 await solver.datadome({ websiteURL, userAgent, captchaUrl, proxy });
+```
+
+[***Solving Imperva***](https://docs.capsolver.com/guide/antibots/datadome.html)
+
+```typescript
+await solver.imperva({ websiteURL, reeseScriptURL });
 ```
 
 [***Solving turnstile***](https://docs.capsolver.com/guide/antibots/cloudflare_turnstile.html)
 
-```javascript
-// under manteniance at 27-07-2024
-await solver.antiturnstile({ websiteURL, websiteKey, metadata: null });
+```typescript
+await solver.turnstile({ websiteURL, websiteKey, metadata: null });
 ```
 
 [***Solving mtcaptcha***](https://docs.capsolver.com/guide/captcha/MtCaptcha.html)
 
-```javascript
+```typescript
 await.solver.mtcatpcha({ websiteURL, websiteKey, proxy });
 ```
 
 [***Solving image2text captcha***](https://docs.capsolver.com/guide/recognition/ImageToTextTask.html)
 
-```javascript
+```typescript
 await solver.image2text({ websiteURL: null, body, module: null, score: null, caseSensitive: null });
 ```
-
-- ❌ Unsupported:
-    - AwsWaf (token)
-    - AwsWafClassification
-    - ReCaptchaClassification
-    - VisionEngine
