@@ -7,10 +7,9 @@ const solver = new Solver({
 
 async function main() {
   await solver
-    .mtcaptcha({
-      websiteURL: 'https://www.mtcaptcha.com/',
-      websiteKey: 'MTPublic-tqNCRE0GS',
-      proxy: process.env.PROXYSTRING,
+    .imperva({
+      websiteURL: 'https://amadeus.com/',
+      reeseScriptURL: 'https://amadeus.com/Battaine-of-now-But-him-Liuery-atten-It-is-speak',
     })
     .then((s: any) => {
       console.log(s);

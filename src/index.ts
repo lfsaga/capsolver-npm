@@ -1,4 +1,4 @@
 export { Solver } from './Solver';
 export { Handler } from './Handler';
-export { TaskException } from './exceptions/TaskException';
+export { SolverError } from './errors';
 export * from './types/tasks';

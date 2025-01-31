@@ -1,17 +1,19 @@
 require('dotenv').config();
-const { Solver } = require('../dist');
+const { Solver, SolverError } = require('../dist');
+
+const solver = new Solver({
+  apiKey: process.env.API_KEY,
+});
 
 async function main() {
-  const solver = new Solver({
-    apiKey: process.env.APIKEY,
-  });
-
-  try {
-    const balance = await solver.balance();
-    console.log('USD balance', balance);
-  } catch (error) {
-    console.log(error);
-  }
+  await solver
+    .balance()
+    .then((b: number) => {
+      console.log('USD balance', b);
+    })
+    .catch((e: typeof SolverError) => {
+      console.log(e);
+    });
 }
 
 main();

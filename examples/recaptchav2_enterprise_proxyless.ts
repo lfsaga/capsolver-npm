@@ -1,4 +1,5 @@
 require('dotenv').config();
+const axios = require('axios');
 const { Solver, SolverError } = require('../dist');
 
 const solver = new Solver({
@@ -6,11 +7,12 @@ const solver = new Solver({
 });
 
 async function main() {
+  const res = await axios.get('https://segmentfault.com/gateway/geetest/token');
+
   await solver
-    .mtcaptcha({
-      websiteURL: 'https://www.mtcaptcha.com/',
-      websiteKey: 'MTPublic-tqNCRE0GS',
-      proxy: process.env.PROXYSTRING,
+    .recaptchav2enterpriseproxyless({
+      websiteURL: 'https://login.yahoo.net',
+      websiteKey: '6Ldbp6saAAAAAAwuhsFeAysZKjR319pRcKUitPUO',
     })
     .then((s: any) => {
       console.log(s);

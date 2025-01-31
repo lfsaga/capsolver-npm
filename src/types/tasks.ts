@@ -1,11 +1,11 @@
-export interface BaseTask {
+export interface BaseSolverTask {
   type: string;
   proxy?: string;
   websiteURL?: string;
   websiteKey?: string;
 }
 
-export interface ImageToTextTask extends BaseTask {
+export interface ImageToTextTask extends BaseSolverTask {
   type: 'ImageToTextTask';
   body?: string;
   module?: string;
@@ -13,66 +13,61 @@ export interface ImageToTextTask extends BaseTask {
   case?: boolean;
 }
 
-export interface AntiAwsWafTask extends BaseTask {
+export interface AntiAwsWafTask extends BaseSolverTask {
   type: 'AntiAwsWafTask';
-  websiteURL: string;
-  awsKey: string;
-  awsIv: string;
-  awsContext: string;
-  awsChallengeJS: string;
-}
-
-export interface BinanceCaptchaTask extends BaseTask {
-  type: 'BinanceCaptchaTask';
-  proxy?: string;
   websiteURL?: string;
-  websiteKey?: string;
-  validateId?: string;
+  awsKey?: string;
+  awsIv?: string;
+  awsContext?: string;
+  awsChallengeJS?: string;
 }
 
-export interface MTCaptchaTask extends BaseTask {
+export interface AntiAwsWafTaskProxyless extends BaseSolverTask {
+  type: 'AntiAwsWafTaskProxyless';
+  websiteURL?: string;
+  awsKey?: string;
+  awsIv?: string;
+  awsContext?: string;
+  awsChallengeJS?: string;
+}
+
+export interface AwsWafClassification extends BaseSolverTask {
+  type: 'AwsWafClassification';
+  websiteURL?: string;
+  images?: string[];
+  question?: string;
+}
+
+export interface VisionEngine extends BaseSolverTask {
+  type: 'VisionEngine';
+  module?: string;
+  websiteURL?: string;
+  image?: string;
+  imageBackground?: string;
+  question?: string;
+}
+
+export interface MTCaptchaTask extends BaseSolverTask {
   type: 'MTCaptchaTask';
   proxy?: string;
   websiteURL?: string;
   websiteKey?: string;
 }
 
-export interface MTCaptchaTaskProxyLess extends BaseTask {
-  type: 'MTCaptchaTaskProxyLess';
+export interface MTCaptchaTaskProxyless extends BaseSolverTask {
+  type: 'MTCaptchaTaskProxyless';
   websiteURL?: string;
   websiteKey?: string;
 }
 
-export interface HCaptchaTask extends BaseTask {
-  type: 'HCaptchaTask';
-  proxy?: string;
+export interface ReCaptchaV2Classification extends BaseSolverTask {
+  type: 'ReCaptchaV2Classification';
   websiteURL?: string;
-  websiteKey?: string;
-  isInvisible?: boolean;
-  enterprisePayload?: Record<string, any>;
-  userAgent?: string;
+  question?: string;
+  image?: string;
 }
 
-export interface HCaptchaTaskProxyLess extends BaseTask {
-  type: 'HCaptchaTaskProxyLess';
-  websiteURL?: string;
-  websiteKey?: string;
-  isInvisible?: boolean;
-  enterprisePayload?: Record<string, any>;
-  userAgent?: string;
-}
-
-export interface HCaptchaEnterpriseTask extends BaseTask {
-  type: 'HCaptchaEnterpriseTask';
-  proxy?: string;
-  websiteURL?: string;
-  websiteKey?: string;
-  isInvisible?: boolean;
-  enterprisePayload?: Record<string, any>;
-  userAgent?: string;
-}
-
-export interface RecaptchaV2Task extends BaseTask {
+export interface ReCaptchaV2Task extends BaseSolverTask {
   type: 'RecaptchaV2Task';
   proxy?: string;
   websiteURL?: string;
@@ -85,32 +80,8 @@ export interface RecaptchaV2Task extends BaseTask {
   cookies?: string;
 }
 
-export interface FunCaptchaTask extends BaseTask {
-  type: 'FunCaptchaTask';
-  proxy?: string;
-  websiteURL?: string;
-  websitePublicKey?: string;
-  funcaptchaApiJSSubdomain?: string;
-  data?: string;
-  userAgent?: string;
-}
-
-export interface AwsWafClassification extends BaseTask {
-  type: 'AwsWafClassification';
-  images?: object;
-  question?: string;
-  score?: number;
-  case?: boolean;
-}
-
-export interface HCaptchaClassification extends BaseTask {
-  type: 'HCaptchaClassification';
-  question?: string;
-  queries?: object;
-}
-
-export interface RecaptchaV2TaskProxyLess extends BaseTask {
-  type: 'RecaptchaV2TaskProxyLess';
+export interface ReCaptchaV2TaskProxyless extends BaseSolverTask {
+  type: 'ReCaptchaV2TaskProxyless';
   websiteURL?: string;
   websiteKey?: string;
   userAgent?: string;
@@ -118,8 +89,8 @@ export interface RecaptchaV2TaskProxyLess extends BaseTask {
   cookies?: string;
 }
 
-export interface RecaptchaV2EnterpriseTask extends BaseTask {
-  type: 'RecaptchaV2EnterpriseTask';
+export interface ReCaptchaV2EnterpriseTask extends BaseSolverTask {
+  type: 'ReCaptchaV2EnterpriseTask';
   proxy?: string;
   websiteURL?: string;
   websiteKey?: string;
@@ -129,8 +100,8 @@ export interface RecaptchaV2EnterpriseTask extends BaseTask {
   cookies?: string;
 }
 
-export interface RecaptchaV2EnterpriseTaskProxyLess extends BaseTask {
-  type: 'RecaptchaV2EnterpriseTaskProxyLess';
+export interface ReCaptchaV2EnterpriseTaskProxyless extends BaseSolverTask {
+  type: 'ReCaptchaV2EnterpriseTaskProxyless';
   websiteURL?: string;
   websiteKey?: string;
   userAgent?: string;
@@ -139,51 +110,69 @@ export interface RecaptchaV2EnterpriseTaskProxyLess extends BaseTask {
   cookies?: string;
 }
 
-export interface RecaptchaV3Task extends BaseTask {
-  type: 'RecaptchaV3Task';
+export interface ReCaptchaV3Task extends BaseSolverTask {
+  type: 'ReCaptchaV3Task';
   proxy?: string;
   websiteURL?: string;
   websiteKey?: string;
   pageAction?: string;
-  minScore?: number;
+  enterprisePayload?: any;
+  apiDomain?: string;
+  cookies?: number;
 }
 
-export interface RecaptchaV3TaskProxyLess extends BaseTask {
-  type: 'RecaptchaV3TaskProxyLess';
+export interface ReCaptchaV3TaskProxyless extends BaseSolverTask {
+  type: 'ReCaptchaV3TaskProxyless';
+  proxy?: string;
   websiteURL?: string;
   websiteKey?: string;
   pageAction?: string;
-  minScore?: number;
+  enterprisePayload?: any;
+  apiDomain?: string;
+  cookies?: number;
 }
 
-export interface ReCaptchaV2Classification extends BaseTask {
-  type: 'ReCaptchaV2Classification';
-  question?: string;
-  image?: string;
+export interface ReCaptchaV3EnterpriseTask extends BaseSolverTask {
+  type: 'ReCaptchaV3EnterpriseTask';
+  proxy?: string;
+  websiteURL?: string;
+  websiteKey?: string;
+  userAgent?: string;
+  enterprisePayload?: Record<string, any>;
+  apiDomain?: string;
+  cookies?: string;
 }
 
-export interface GeeTestTask extends BaseTask {
+export interface ReCaptchaV3EnterpriseTaskProxyless extends BaseSolverTask {
+  type: 'ReCaptchaV3EnterpriseTaskProxyless';
+  websiteURL?: string;
+  websiteKey?: string;
+  pageAction?: string;
+  enterprisePayload?: any;
+  apiDomain?: string;
+  cookies?: number;
+}
+
+export interface GeeTestTask extends BaseSolverTask {
   type: 'GeeTestTask';
   proxy?: string;
   websiteURL?: string;
   gt?: string;
   challenge?: string;
-  geetestApiServerSubdomain?: string;
-  userAgent?: string;
   captchaId?: string;
+  geetestApiServerSubdomain?: string;
 }
 
-export interface GeeTestTaskProxyLess extends BaseTask {
-  type: 'GeeTestTaskProxyLess';
+export interface GeeTestTaskProxyless extends BaseSolverTask {
+  type: 'GeeTestTaskProxyless';
   websiteURL?: string;
   gt?: string;
   challenge?: string;
-  geetestApiServerSubdomain?: string;
-  userAgent?: string;
   captchaId?: string;
+  geetestApiServerSubdomain?: string;
 }
 
-export interface DataDomeSliderTask extends BaseTask {
+export interface DataDomeSliderTask extends BaseSolverTask {
   type: 'DataDomeSliderTask';
   proxy?: string;
   websiteURL?: string;
@@ -191,68 +180,52 @@ export interface DataDomeSliderTask extends BaseTask {
   userAgent?: string;
 }
 
-export interface FunCaptchaClassification extends BaseTask {
-  type: 'FunCaptchaClassification';
-  image?: string;
-  question?: string;
-}
-
-export interface FunCaptchaTaskProxyLess extends BaseTask {
-  type: 'FunCaptchaTaskProxyLess';
+export interface AntiTurnstileTaskProxyless extends BaseSolverTask {
+  type: 'AntiTurnstileTaskProxyless';
   websiteURL?: string;
-  websitePublicKey?: string;
-  funcaptchaApiJSSubdomain?: string;
-  data?: string;
-  userAgent?: string;
+  websiteKey?: string;
+  metadata?: Record<string, any>;
 }
 
-export interface AntiCloudflareTask extends BaseTask {
+export interface AntiCloudflareTask extends BaseSolverTask {
   type: 'AntiCloudflareTask';
+  websiteURL?: string;
   proxy?: string;
-  websiteURL?: string;
-  websiteKey?: string;
-  metadata?: Record<string, any>;
 }
 
-export interface AntiTurnstileTask extends BaseTask {
-  type: 'AntiTurnstileTask';
-  proxy?: string;
+export interface AntiImpervaTaskProxyless extends BaseSolverTask {
+  type: 'AntiImpervaTaskProxyless';
   websiteURL?: string;
-  websiteKey?: string;
-  metadata?: Record<string, any>;
+  reeseScriptURL?: string;
 }
 
-export interface AntiTurnstileTaskProxyLess extends BaseTask {
-  type: 'AntiTurnstileTaskProxyLess';
+export interface FriendlyCaptchaTaskProxyless extends BaseSolverTask {
+  type: 'FriendlyCaptchaTaskProxyless';
   websiteURL?: string;
   websiteKey?: string;
-  metadata?: Record<string, any>;
 }
 
-export type CaptchaTask =
+export type SolverTask =
   | ImageToTextTask
   | AntiAwsWafTask
-  | BinanceCaptchaTask
-  | MTCaptchaTask
-  | MTCaptchaTaskProxyLess
-  | HCaptchaTask
-  | HCaptchaTaskProxyLess
-  | HCaptchaEnterpriseTask
-  | RecaptchaV2Task
-  | FunCaptchaTask
+  | AntiAwsWafTaskProxyless
   | AwsWafClassification
-  | HCaptchaClassification
-  | RecaptchaV2TaskProxyLess
-  | RecaptchaV2EnterpriseTask
-  | RecaptchaV2EnterpriseTaskProxyLess
-  | RecaptchaV3Task
-  | RecaptchaV3TaskProxyLess
+  | VisionEngine
+  | MTCaptchaTask
+  | MTCaptchaTaskProxyless
+  | ReCaptchaV2Task
+  | ReCaptchaV2TaskProxyless
+  | ReCaptchaV2EnterpriseTask
+  | ReCaptchaV2EnterpriseTaskProxyless
+  | ReCaptchaV3Task
+  | ReCaptchaV3TaskProxyless
+  | ReCaptchaV3EnterpriseTask
+  | ReCaptchaV3EnterpriseTaskProxyless
   | ReCaptchaV2Classification
   | GeeTestTask
-  | GeeTestTaskProxyLess
+  | GeeTestTaskProxyless
   | DataDomeSliderTask
-  | FunCaptchaClassification
-  | FunCaptchaTaskProxyLess
   | AntiCloudflareTask
-  | AntiTurnstileTask
-  | AntiTurnstileTaskProxyLess;
+  | AntiTurnstileTaskProxyless
+  | AntiImpervaTaskProxyless
+  | FriendlyCaptchaTaskProxyless;
