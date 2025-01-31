@@ -7,10 +7,10 @@ const solver = new Solver({
 
 async function main() {
   await solver
-    .mtcaptcha({
-      websiteURL: 'https://www.mtcaptcha.com/',
-      websiteKey: 'MTPublic-tqNCRE0GS',
-      proxy: process.env.PROXYSTRING,
+    .turnstileproxyless({
+      websiteURL: 'https://peet.ws/turnstile-test/non-interactive.html',
+      websiteKey: '0x4AAAAAAABS7vwvV6VFfMcD',
+      metadata: { action: 'login', cdata: '0000-1111-2222-3333-example-cdata' },
     })
     .then((s: any) => {
       console.log(s);

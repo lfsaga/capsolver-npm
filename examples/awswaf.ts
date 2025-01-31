@@ -7,9 +7,13 @@ const solver = new Solver({
 
 async function main() {
   await solver
-    .mtcaptcha({
-      websiteURL: 'https://www.mtcaptcha.com/',
-      websiteKey: 'MTPublic-tqNCRE0GS',
+    .awswaf({
+      websiteURL: 'https://bark.com/',
+      // awsKey: 'AQIDAHjcYu/GjX+QlghicBg......shMIKvZswZemrVVqA==',
+      // awsIv: 'CgAAFDIlckAAAAid',
+      // awsContext: '7DhQfG5CmoY90ZdxdHCi8WtJ3z......njNKULdcUUVEtxTk=',
+      // awsChallengeJS:
+      // 'https://41bcdd4fb3cb.610cd090.us-east-1.token.awswaf.com/41bcdd4fb3cb/0d21de737ccb/cd77baa6c832/challenge.js',
       proxy: process.env.PROXYSTRING,
     })
     .then((s: any) => {

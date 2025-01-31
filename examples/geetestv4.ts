@@ -7,9 +7,9 @@ const solver = new Solver({
 
 async function main() {
   await solver
-    .mtcaptcha({
-      websiteURL: 'https://www.mtcaptcha.com/',
-      websiteKey: 'MTPublic-tqNCRE0GS',
+    .geetest({
+      websiteURL: 'https://699pic.com/',
+      captchaId: '8e94098fc8fd6286eb4afb663ecece01', // v4 required
       proxy: process.env.PROXYSTRING,
     })
     .then((s: any) => {

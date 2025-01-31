@@ -1,42 +1,37 @@
 # capsolver-npm-examples
 
+### how to test
+
 ### steps
 
-1. do `npm install`
-2. copy-paste `.env.example` to `.env`
-3. set `APIKEY` and `PROXYSTRING` (proxy format `ip:port:user:pass`)
+1. clone `git clone https://github.com/lfsaga/capsolver-npm`
+2. do `npm build`
+3. do `npm install` on `./examples`
+4. create `./examples/.env` from example file
 
 ### usage
 
-- run all sequentially: `./all.sh`
-- run single: (copy-paste from below)
+- executes `all.sh` to test sequentially
+- single test commands
   - `npm run test:balance`
   - `npm run test:custom-task`
-  - `npm run test:anticloudflare`
-  - `npm run test:antiturnstile`
-  - `npm run test:antiturnstileproxyless`
+  - `npm run test:turnstileproxyless`
   - `npm run test:datadome`
-  - `npm run test:img2txt`
+  - `npm run test:image2text`
   - `npm run test:mtcaptcha`
-  - `npm run test:funcaptchaclassification`
-  - `npm run test:funcaptcha`
-  - `npm run test:funcaptchaproxyless`
   - `npm run test:geetestv3`
   - `npm run test:geetestv3proxyless`
   - `npm run test:geetestv4`
   - `npm run test:geetestv4proxyless`
-  - `npm run test:hcaptcha`
-  - `npm run test:hcaptchaclassification`
-  - `npm run test:hcaptchaproxyless`
   - `npm run test:recatpchav2`
   - `npm run test:recatpchav2proxyless`
   - `npm run test:recatpchav3`
   - `npm run test:recatpchav3proxyless`
 
-### stress test
+### stress test with PM2
 
-- start multiple stress tests `pm2 start pm2/ecosystem.config.js --only=geetestv3,geetestv4`
+- start multiple (take care of your balance)
+  - `pm2 start ecosystem.config.js`
+  - `pm2 start ecosystem.config.js --only=geetestv3,geetestv4`
 - to monit: `pm2 monit`
-  ![alt text](image.png)
-
-- to stop: `pm2 delete all`
+- to stop: `pm2 delete ecosystem.config.js`

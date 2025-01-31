@@ -7,9 +7,10 @@ const solver = new Solver({
 
 async function main() {
   await solver
-    .mtcaptcha({
-      websiteURL: 'https://www.mtcaptcha.com/',
-      websiteKey: 'MTPublic-tqNCRE0GS',
+    .recaptchav3({
+      websiteURL: 'https://www.freemans.com/',
+      websiteKey: '6LfA5nobAAAAAMxwekgF_DnCofaDlm-YqHX5v1BI',
+      pageAction: 'sign_in',
       proxy: process.env.PROXYSTRING,
     })
     .then((s: any) => {

@@ -1,107 +1,111 @@
 import { config } from 'dotenv';
 import axios from 'axios';
+
 import { Handler } from './Handler';
-import { TaskException } from './exceptions/TaskException';
+import { SolverError } from './errors';
+
+import { SolverOptions } from './types';
 import {
-  HCaptchaTask,
   MTCaptchaTask,
-  RecaptchaV2Task,
-  CaptchaTask,
+  ReCaptchaV2Task,
+  SolverTask,
   ImageToTextTask,
-  HCaptchaClassification,
-  HCaptchaTaskProxyLess,
-  RecaptchaV2TaskProxyLess,
-  RecaptchaV2EnterpriseTask,
-  RecaptchaV2EnterpriseTaskProxyLess,
-  RecaptchaV3Task,
-  RecaptchaV3TaskProxyLess,
+  ReCaptchaV2TaskProxyless,
+  ReCaptchaV2EnterpriseTask as ReCaptchaV2EnterpriseTask,
+  ReCaptchaV2EnterpriseTaskProxyless as ReCaptchaV2EnterpriseTaskProxyless,
+  ReCaptchaV3Task,
+  ReCaptchaV3TaskProxyless,
   DataDomeSliderTask,
-  FunCaptchaTask,
-  FunCaptchaTaskProxyLess,
-  FunCaptchaClassification,
   GeeTestTask,
-  GeeTestTaskProxyLess,
-  AntiCloudflareTask,
-  AntiTurnstileTask,
-  AntiTurnstileTaskProxyLess,
-  MTCaptchaTaskProxyLess,
+  GeeTestTaskProxyless,
+  AntiTurnstileTaskProxyless,
+  AwsWafClassification,
+  FriendlyCaptchaTaskProxyless,
+  AntiAwsWafTask,
+  AntiAwsWafTaskProxyless,
+  AntiImpervaTaskProxyless,
+  ReCaptchaV2Classification,
+  ReCaptchaV3EnterpriseTask,
+  ReCaptchaV3EnterpriseTaskProxyless,
 } from './types/tasks';
 
 config();
 
-interface SolverOptions {
-  apiKey?: string;
-  rqDelay?: number;
-}
-
 export class Solver {
-  private apiKey: string;
-  private rqDelay: number;
+  private k: string;
+  private pd: number;
 
-  constructor({ apiKey = process.env.APIKEY ?? '', rqDelay = 1700 }: SolverOptions = {}) {
-    this.apiKey = apiKey;
-    this.rqDelay = rqDelay;
+  constructor({ apiKey = process.env.APIKEY ?? '', pollDelay = 1700 }: SolverOptions) {
+    this.k = apiKey;
+    this.pd = pollDelay;
   }
 
   public async balance(): Promise<number> {
     try {
-      const response = await axios.post('https://api.capsolver.com/getBalance', {
-        clientKey: this.apiKey,
-      });
-      const data = response.data;
+      const d = (
+        await axios.post('https://api.capsolver.com/getBalance', {
+          clientKey: this.k,
+        })
+      ).data;
 
-      if (data.errorId !== 0) {
-        throw new TaskException('Failed to retrieve balance', data);
+      if (d.errorId !== 0) {
+        return Promise.reject(new SolverError('Failed to retrieve balance', d));
       }
 
-      return data.balance ? parseFloat(data.balance) : data;
-    } catch (error) {
-      console.error(error);
-      throw error;
+      return parseFloat(d.balance || 0);
+    } catch (err) {
+      return Promise.reject(
+        err instanceof SolverError
+          ? err
+          : new SolverError('Unexpected error retrieving balance', {
+              errorCode: 'BALANCE_ERROR',
+              errorDescription: err instanceof Error ? err.message : String(err),
+            })
+      );
     }
   }
 
-  public async runCustomTaskType(options: { task: CaptchaTask; mustPoll?: boolean }): Promise<any> {
+  public async task(options: { task: SolverTask; mustPoll?: boolean }): Promise<any> {
     const { task, mustPoll = true } = options;
 
     if (!task.type) {
-      throw new TypeError(
-        'Type of task is required. Usage: await handler.runAnyTask({ "type": "AntiTurnstileTaskProxyLess", ... })'
+      return Promise.reject(
+        new TypeError(
+          'Type of task is required. Please provide a valid task type. (e.g. RecaptchaV2Task)'
+        )
       );
     }
 
-    const handler = new Handler({
-      task,
-      apiKey: this.apiKey,
-      mustPoll,
-    });
-
-    return handler.execute(this.rqDelay);
+    try {
+      return await new Handler({
+        task,
+        apiKey: this.k,
+        mustPoll,
+      }).execute(this.pd);
+    } catch (error) {
+      return Promise.reject(
+        error instanceof SolverError
+          ? error
+          : new SolverError('Unexpected error in task execution', {
+              errorCode: 'TASK_EXECUTION_ERROR',
+              errorDescription: error instanceof Error ? error.message : String(error),
+            })
+      );
+    }
   }
 
-  // # method wrapping
   public async mtcaptcha(params: Omit<MTCaptchaTask, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
+    return this.task({
       task: {
         type: 'MTCaptchaTask',
         ...params,
       },
-      mustPoll: false,
-    });
-  }
-
-  public async mtcaptchaproxyless(params: Omit<MTCaptchaTaskProxyLess, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
-      task: {
-        type: 'MTCaptchaTaskProxyLess',
-        ...params,
-      },
-      mustPoll: false,
+      mustPoll: true,
     });
   }
 
   public async image2text(params: Omit<ImageToTextTask, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
+    return this.task({
       task: {
         type: 'ImageToTextTask',
         ...params,
@@ -110,35 +114,20 @@ export class Solver {
     });
   }
 
-  public async hcaptcha(params: Omit<HCaptchaTask, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
+  public async recaptchav2classification(
+    params: Omit<ReCaptchaV2Classification, 'type'>
+  ): Promise<any> {
+    return this.task({
       task: {
-        type: 'HCaptchaTask',
+        type: 'ReCaptchaV2Classification',
         ...params,
       },
+      mustPoll: false,
     });
   }
 
-  public async hcaptchaproxyless(params: Omit<HCaptchaTaskProxyLess, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
-      task: {
-        type: 'HCaptchaTaskProxyLess',
-        ...params,
-      },
-    });
-  }
-
-  public async hcaptchaclassification(params: Omit<HCaptchaClassification, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
-      task: {
-        type: 'HCaptchaClassification',
-        ...params,
-      },
-    });
-  }
-
-  public async recaptchav2(params: Omit<RecaptchaV2Task, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
+  public async recaptchav2(params: Omit<ReCaptchaV2Task, 'type'>): Promise<any> {
+    return this.task({
       task: {
         type: 'RecaptchaV2Task',
         ...params,
@@ -146,57 +135,79 @@ export class Solver {
     });
   }
 
-  public async recaptchav2proxyless(params: Omit<RecaptchaV2TaskProxyLess, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
+  public async recaptchav2proxyless(params: Omit<ReCaptchaV2TaskProxyless, 'type'>): Promise<any> {
+    return this.task({
       task: {
-        type: 'RecaptchaV2TaskProxyLess',
+        type: 'ReCaptchaV2TaskProxyless',
         ...params,
       },
     });
   }
 
   public async recaptchav2enterprise(
-    params: Omit<RecaptchaV2EnterpriseTask, 'type'>
+    params: Omit<ReCaptchaV2EnterpriseTask, 'type'>
   ): Promise<any> {
-    return this.runCustomTaskType({
+    return this.task({
       task: {
-        type: 'RecaptchaV2EnterpriseTask',
+        type: 'ReCaptchaV2EnterpriseTask',
         ...params,
       },
     });
   }
 
   public async recaptchav2enterpriseproxyless(
-    params: Omit<RecaptchaV2EnterpriseTaskProxyLess, 'type'>
+    params: Omit<ReCaptchaV2EnterpriseTaskProxyless, 'type'>
   ): Promise<any> {
-    return this.runCustomTaskType({
+    return this.task({
       task: {
-        type: 'RecaptchaV2EnterpriseTaskProxyLess',
+        type: 'ReCaptchaV2EnterpriseTaskProxyless',
         ...params,
       },
     });
   }
 
-  public async recaptchav3(params: Omit<RecaptchaV3Task, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
+  public async recaptchav3(params: Omit<ReCaptchaV3Task, 'type'>): Promise<any> {
+    return this.task({
       task: {
-        type: 'RecaptchaV3Task',
+        type: 'ReCaptchaV3Task',
         ...params,
       },
     });
   }
 
-  public async recaptchav3proxyless(params: Omit<RecaptchaV3TaskProxyLess, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
+  public async recaptchav3proxyless(params: Omit<ReCaptchaV3TaskProxyless, 'type'>): Promise<any> {
+    return this.task({
       task: {
-        type: 'RecaptchaV3TaskProxyLess',
+        type: 'ReCaptchaV3TaskProxyless',
+        ...params,
+      },
+    });
+  }
+
+  public async recaptchav3enterprise(
+    params: Omit<ReCaptchaV3EnterpriseTask, 'type'>
+  ): Promise<any> {
+    return this.task({
+      task: {
+        type: 'ReCaptchaV3EnterpriseTask',
+        ...params,
+      },
+    });
+  }
+
+  public async recaptchav3enterpriseproxyless(
+    params: Omit<ReCaptchaV3EnterpriseTaskProxyless, 'type'>
+  ): Promise<any> {
+    return this.task({
+      task: {
+        type: 'ReCaptchaV3EnterpriseTaskProxyless',
         ...params,
       },
     });
   }
 
   public async datadome(params: Omit<DataDomeSliderTask, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
+    return this.task({
       task: {
         type: 'DataDomeSliderTask',
         ...params,
@@ -204,37 +215,17 @@ export class Solver {
     });
   }
 
-  public async funcaptcha(params: Omit<FunCaptchaTask, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
+  public async imperva(params: Omit<AntiImpervaTaskProxyless, 'type'>): Promise<any> {
+    return this.task({
       task: {
-        type: 'FunCaptchaTask',
-        ...params,
-      },
-    });
-  }
-
-  public async funcaptchaproxyless(params: Omit<FunCaptchaTaskProxyLess, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
-      task: {
-        type: 'FunCaptchaTaskProxyLess',
-        ...params,
-      },
-    });
-  }
-
-  public async funcaptchaclassification(
-    params: Omit<FunCaptchaClassification, 'type'>
-  ): Promise<any> {
-    return this.runCustomTaskType({
-      task: {
-        type: 'FunCaptchaClassification',
+        type: 'AntiImpervaTaskProxyless',
         ...params,
       },
     });
   }
 
   public async geetest(params: Omit<GeeTestTask, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
+    return this.task({
       task: {
         type: 'GeeTestTask',
         ...params,
@@ -242,39 +233,67 @@ export class Solver {
     });
   }
 
-  public async geetestproxyless(params: Omit<GeeTestTaskProxyLess, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
+  public async geetestproxyless(params: Omit<GeeTestTaskProxyless, 'type'>): Promise<any> {
+    return this.task({
       task: {
-        type: 'GeeTestTaskProxyLess',
+        type: 'GeeTestTaskProxyless',
         ...params,
       },
     });
   }
 
-  public async anticloudflare(params: Omit<AntiCloudflareTask, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
+  public async cloudflare(params: Omit<AntiTurnstileTaskProxyless, 'type'>): Promise<any> {
+    return this.task({
       task: {
-        type: 'AntiCloudflareTask',
+        type: 'AntiTurnstileTaskProxyless',
         ...params,
       },
     });
   }
 
-  public async antiturnstile(params: Omit<AntiTurnstileTask, 'type'>): Promise<any> {
-    return this.runCustomTaskType({
+  public async turnstileproxyless(params: Omit<AntiTurnstileTaskProxyless, 'type'>): Promise<any> {
+    return this.task({
       task: {
-        type: 'AntiTurnstileTask',
+        type: 'AntiTurnstileTaskProxyless',
         ...params,
       },
     });
   }
 
-  public async antiturnstileproxyless(
-    params: Omit<AntiTurnstileTaskProxyLess, 'type'>
+  public async awswafclassification(params: Omit<AwsWafClassification, 'type'>): Promise<any> {
+    return this.task({
+      task: {
+        type: 'AwsWafClassification',
+        ...params,
+      },
+      mustPoll: false,
+    });
+  }
+
+  public async awswaf(params: Omit<AntiAwsWafTask, 'type'>): Promise<any> {
+    return this.task({
+      task: {
+        type: 'AntiAwsWafTask',
+        ...params,
+      },
+    });
+  }
+
+  public async awswafproxyless(params: Omit<AntiAwsWafTaskProxyless, 'type'>): Promise<any> {
+    return this.task({
+      task: {
+        type: 'AntiAwsWafTaskProxyless',
+        ...params,
+      },
+    });
+  }
+
+  public async friendlycaptchaproxyless(
+    params: Omit<FriendlyCaptchaTaskProxyless, 'type'>
   ): Promise<any> {
-    return this.runCustomTaskType({
+    return this.task({
       task: {
-        type: 'AntiTurnstileTaskProxyLess',
+        type: 'FriendlyCaptchaTaskProxyless',
         ...params,
       },
     });
