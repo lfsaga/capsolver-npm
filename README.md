@@ -14,9 +14,7 @@ manage to solve captcha challenges with node
 
 ## Usage
 
-❗ You need to debug each website and the captcha use case, in order to adjust the correct implementation parameters.
-
-- Initialize `Solver` in your script:
+- Initialize and use `Solver` and `SolverError`
 
 ```javascript
 const { Solver, SolverError } = require('capsolver-npm');
@@ -30,9 +28,8 @@ const solver = new Solver('CAP-XXXXXX ...'); // one solver by apikey
 // .catch((e: typeof SolverError) => console.error(e.errorCode))
 ```
 
-- When custom `proxy` is required, add matching the following
-
-  - `ip:port:user:pass`
+- Debug custom implementation parameters to send.
+- When provide `proxy` is required, match the following pattern: `ip:port:user:pass`
 
 ## 📁 Updated examples
 
@@ -182,3 +179,11 @@ await.solver.mtcatpcha({ websiteURL, websiteKey, proxy });
 ```javascript
 await solver.image2text({ websiteURL: null, body, module: null, score: null, caseSensitive: null });
 ```
+
+#### Disclaimer
+
+By using this package, you acknowledge and agree that:
+
+- This package is a third-party wrapper for the Capsolver API and is not affiliated. It is provided as is without any warranties or guarantees.
+
+- You are solely responsible for how you use the API and the author does not assume any liability for misuse, abuse, or violations of Capsolver’s terms of service.
