@@ -47,9 +47,9 @@ export interface FriendlyCaptchaTaskProxyless extends BaseSolverTask {
 export interface GeeTestTask extends BaseSolverTask {
   type: 'GeeTestTask';
   proxy: string;
-  websiteURL?: string;
-  gt?: string;
-  challenge?: string;
+  websiteURL: string;
+  gt: string;
+  challenge: string;
   captchaId?: string;
   geetestApiServerSubdomain?: string;
 }
