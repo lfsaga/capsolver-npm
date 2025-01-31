@@ -2,8 +2,8 @@
 
 manage to solve captcha challenges with node
 
-- ❗ API key it's **required**. [**Get here.**](https://dashboard.capsolver.com/passport/register?inviteCode=CHhA_5os)
-- 👌🏼 Now in Typescript.
+- ❗ API key it's **required** [**Get here**](https://dashboard.capsolver.com/passport/register?inviteCode=CHhA_5os)
+- 👌🏼 Now in Typescript
 
 [![](https://img.shields.io/badge/2.0.2-capsolver--npm-darkgreen?logo=npm&logoColor=white)](https://www.npmjs.com/package/capsolver-npm)
 [![](https://img.shields.io/badge/documentation-docs.capsolver.com-darkgreen)](https://docs.capsolver.com/guide/getting-started.html)
@@ -19,15 +19,22 @@ manage to solve captcha challenges with node
 - Initialize `Solver` in your script:
 
 ```javascript
-const { Solver, SolveTaskError } = require('capsolver-npm');
+const { Solver, SolverError } = require('capsolver-npm');
 const solver = new Solver('CAP-XXXXXX ...'); // one solver by apikey
+
+// usage example:
+// await solver.recaptchav2({
+//    parameters ...
+//  })
+// .then(solution => console.log(solution))
+// .catch((e: typeof SolverError) => console.error(e.errorCode))
 ```
 
 - When custom `proxy` is required, add matching the following
 
   - `ip:port:user:pass`
 
-## 📁 Examples
+## 📁 Updated examples
 
 **Figure out [here](https://github.com/0qwertyy/capsolver-npm/tree/master/examples).**
 
