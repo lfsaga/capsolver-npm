@@ -1,8 +1,9 @@
 #!/bin/bash
-npm run test:awswafclassification
-npm run test:awswafproxyless
-npm run test:awswaf
 npm run test:balance
+npm run test:task
+npm run test:awswafclassification
+# npm run test:awswafproxyless
+# npm run test:awswaf
 npm run test:datadome
 npm run test:friendlycaptchaproxyless
 npm run test:geetestv3proxyless
@@ -21,6 +22,5 @@ npm run test:recaptchav3enterpriseproxyless
 npm run test:recaptchav3enterprise
 npm run test:recaptchav3proxyless
 npm run test:recaptchav3
-npm run test:task
 npm run test:turnstileproxyless
 npm run test:visionengine
