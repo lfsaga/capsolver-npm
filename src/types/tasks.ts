@@ -40,8 +40,8 @@ export interface AwsWafClassification extends BaseSolverTask {
 
 export interface VisionEngine extends BaseSolverTask {
   type: 'VisionEngine';
-  module?: string;
   websiteURL?: string;
+  module?: string;
   image?: string;
   imageBackground?: string;
   question?: string;
