@@ -1,5 +1,4 @@
 require('dotenv').config();
-const axios = require('axios');
 const { Solver, SolverError } = require('../dist');
 
 const solver = new Solver({
@@ -7,12 +6,10 @@ const solver = new Solver({
 });
 
 async function main() {
-  const res = await axios.get('https://segmentfault.com/gateway/geetest/token');
-
   await solver
     .recaptchav2proxyless({
-      websiteURL: 'https://www.nakedcph.com/en/auth/view',
-      websiteKey: '6LeNqBUUAAAAAFbhC-CS22rwzkZjr_g4vMmqD_qo',
+      websiteURL: 'https://2captcha.com/demo/recaptcha-v2',
+      websiteKey: '6LfD3PIbAAAAAJs_eEHvoOl75_83eXSqpPSRFJ_u',
     })
     .then((s: any) => {
       console.log(s);

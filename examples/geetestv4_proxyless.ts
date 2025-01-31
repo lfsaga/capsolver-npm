@@ -8,8 +8,8 @@ const solver = new Solver({
 async function main() {
   await solver
     .geetestproxyless({
-      websiteURL: 'https://699pic.com/',
-      captchaId: '8e94098fc8fd6286eb4afb663ecece01', // v4 required
+      websiteURL: 'https://2captcha.com/demo/geetest-v4',
+      captchaId: 'e392e1d7fd421dc63325744d5a2b9c73', // v4 required
     })
     .then((s: any) => {
       console.log(s);

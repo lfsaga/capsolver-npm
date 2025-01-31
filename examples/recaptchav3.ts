@@ -8,9 +8,9 @@ const solver = new Solver({
 async function main() {
   await solver
     .recaptchav3({
-      websiteURL: 'https://www.freemans.com/',
-      websiteKey: '6LfA5nobAAAAAMxwekgF_DnCofaDlm-YqHX5v1BI',
-      pageAction: 'sign_in',
+      websiteURL: 'https://2captcha.com/demo/recaptcha-v3',
+      websiteKey: '6LfB5_IbAAAAAMCtsjEHEHKqcB9iQocwwxTiihJu',
+      pageAction: 'demo_action',
       proxy: process.env.PROXYSTRING,
     })
     .then((s: any) => {

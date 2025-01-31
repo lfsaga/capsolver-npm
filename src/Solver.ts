@@ -27,6 +27,8 @@ import {
   ReCaptchaV2Classification,
   ReCaptchaV3EnterpriseTask,
   ReCaptchaV3EnterpriseTaskProxyless,
+  VisionEngine,
+  AntiCloudflareTask,
 } from './types/tasks';
 
 config();
@@ -92,6 +94,16 @@ export class Solver {
             })
       );
     }
+  }
+
+  public async visionengine(params: Omit<VisionEngine, 'type'>): Promise<any> {
+    return this.task({
+      task: {
+        type: 'VisionEngine',
+        ...params,
+      },
+      mustPoll: false,
+    });
   }
 
   public async mtcaptcha(params: Omit<MTCaptchaTask, 'type'>): Promise<any> {
@@ -242,10 +254,10 @@ export class Solver {
     });
   }
 
-  public async cloudflare(params: Omit<AntiTurnstileTaskProxyless, 'type'>): Promise<any> {
+  public async cloudflare(params: Omit<AntiCloudflareTask, 'type'>): Promise<any> {
     return this.task({
       task: {
-        type: 'AntiTurnstileTaskProxyless',
+        type: 'AntiCloudflareTask',
         ...params,
       },
     });
