@@ -20,7 +20,7 @@ async function main() {
     })
     .catch((e: typeof SolverError) => {
       console.log(
-        `tid \x1b[33m${e.errorTaskId} \x1b[31m${e.errorCode} \x1b[0m(${e.errorDescription})`
+        `taskId \x1b[33m${e.errorTaskId} \x1b[31m${e.errorCode} \x1b[0m(${e.errorDescription})`
       );
     });
 }
