@@ -51,4 +51,4 @@
 
 ### demo
 
-[Link to video](https://github.com/user-attachments/assets/78728ce4-f21d-4f9b-99d7-0c13c75a8cd3)
+[Link to video](https://i.imgur.com/rYUsYuf.mp4)
