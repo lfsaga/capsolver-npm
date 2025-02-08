@@ -3,7 +3,7 @@ const axios = require('axios');
 const { Solver, SolverError } = require('../dist');
 
 const solver = new Solver({
-  apiKey: process.env.API_KEY,
+  apiKey: process.env.APIKEY,
 });
 
 async function main() {

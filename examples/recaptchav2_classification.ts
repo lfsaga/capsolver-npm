@@ -2,7 +2,7 @@ require('dotenv').config();
 const { Solver, SolverError } = require('../dist');
 
 const solver = new Solver({
-  apiKey: process.env.API_KEY,
+  apiKey: process.env.APIKEY,
 });
 
 const base64 =

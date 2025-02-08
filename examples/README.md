@@ -12,7 +12,8 @@
 
 ### usage
 
-- run `./all.sh` to test sequentially (may require a `chmod` operation)
+- run `./all.sh` to test sequentially
+  - some examples requires `PROXYSTRING` configured
 - test a single task (copy & paste from below)
   - `npm run test:balance`
   - `npm run test:task`
