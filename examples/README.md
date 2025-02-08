@@ -49,4 +49,7 @@
 - to monit: `pm2 monit`
 - to stop: `pm2 delete ecosystem.config.js`
 
-<video controls src="https://i.imgur.com/rYUsYuf.mp4" title="Title"></video>
+### demo
+
+<video src="https://i.imgur.com/rYUsYuf.mp4" controls="controls" style="max-width: 730px;">
+</video>
