@@ -4,15 +4,16 @@
 
 ### steps
 
-1. clone `git clone https://github.com/lfsaga/capsolver-npm`
-2. do `npm build`
-3. do `npm install` on `./examples`
-4. create `./examples/.env` from example file
+1. `git clone https://github.com/lfsaga/capsolver-npm && cd capsolver-npm`
+2. `npm install && npm run build`
+3. `cd examples && npm install`
+4. `cp .env.example .env`
+5. `nano .env` to set your `APIKEY`.
 
 ### usage
 
-- executes `all.sh` to test sequentially
-- single test commands
+- run `./all.sh` to test sequentially (may require a `chmod` operation)
+- test a single task (copy & paste from below)
   - `npm run test:balance`
   - `npm run test:task`
   - `npm run test:awswafclassification`
@@ -41,8 +42,11 @@
 
 ### stress test with PM2
 
+- install pm2: `npm install -g pm2`
 - start multiple (take care of your balance)
   - `pm2 start ecosystem.config.js`
   - `pm2 start ecosystem.config.js --only=geetestv3,geetestv4`
 - to monit: `pm2 monit`
 - to stop: `pm2 delete ecosystem.config.js`
+
+<video controls src="pm2.mp4" title="Title"></video>
