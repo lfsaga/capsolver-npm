@@ -62,7 +62,7 @@ export class Handler {
   private async poll(tid: string, pd: number): Promise<any> {
     let t = 0;
 
-    while (t <= 10) {
+    while (t <= 50) {
       const res = (
         await axios({
           method: 'post',
@@ -80,6 +80,9 @@ export class Handler {
       if (res.status === 'ready') {
         return res.solution || res;
       }
+
+      await new Promise((r) => setTimeout(r, pd));
+      t++;
     }
 
     throw new SolverError('Failed retrieving task solution. Error threshold excedeed.', {
