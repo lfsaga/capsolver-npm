@@ -51,6 +51,5 @@
 
 ### demo
 
-<video width="100%" autoplay loop muted playsinline controls>
-  <source src="https://i.imgur.com/rYUsYuf.mp4" type="video/mp4">
+<video src="https://github.com/user-attachments/assets/78728ce4-f21d-4f9b-99d7-0c13c75a8cd3" controls="controls" style="max-width: 730px;">
 </video>
