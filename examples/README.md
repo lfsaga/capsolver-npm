@@ -51,5 +51,6 @@
 
 ### demo
 
-<video src="https://i.imgur.com/rYUsYuf.mp4" controls="controls" style="max-width: 730px;">
+<video width="100%" autoplay loop muted playsinline controls>
+  <source src="https://i.imgur.com/rYUsYuf.mp4" type="video/mp4">
 </video>
