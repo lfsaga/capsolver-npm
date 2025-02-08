@@ -16,16 +16,29 @@ manage to solve captcha challenges with node
 
 - Initialize and use `Solver` and `SolverError`
 
-```javascript
+```typescript
 const { Solver, SolverError } = require('capsolver-npm');
-const solver = new Solver('CAP-XXXXXX ...'); // one solver by apikey
 
-// usage example:
-// await solver.recaptchav2({
-//    parameters ...
-//  })
-// .then(solution => console.log(solution))
-// .catch((e: typeof SolverError) => console.error(e.errorCode))
+const solver = new Solver({
+  apiKey: 'CAP-XXXXXX ...',
+});
+
+async function main() {
+  await solver
+    .recaptchav2({
+      //  parameters ...
+    })
+    .then((s: any) => {
+      console.log(s);
+    })
+    .catch((e: typeof SolverError) => {
+      console.log(
+        `taskId \x1b[33m${e.errorTaskId} \x1b[31m${e.errorCode} \x1b[0m(${e.errorDescription})`
+      );
+    });
+}
+
+main();
 ```
 
 - Debug custom implementation parameters to send.
