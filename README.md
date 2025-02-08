@@ -5,7 +5,7 @@ manage to solve captcha challenges with node
 - ❗ API key it's **required** [**Get here**](https://dashboard.capsolver.com/passport/register?inviteCode=CHhA_5os)
 - 👌🏼 Now in Typescript
 
-[![](https://img.shields.io/badge/2.0.2-capsolver--npm-darkgreen?logo=npm&logoColor=white)](https://www.npmjs.com/package/capsolver-npm)
+[![npm version](https://img.shields.io/npm/v/capsolver-npm)](https://www.npmjs.com/package/capsolver-npm)
 [![](https://img.shields.io/badge/documentation-docs.capsolver.com-darkgreen)](https://docs.capsolver.com/guide/getting-started.html)
 
 ## Install
