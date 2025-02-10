@@ -4,7 +4,6 @@ import axios from 'axios';
 import { Handler } from './Handler';
 import { SolverError } from './errors';
 
-import { SolverOptions } from './types';
 import {
   MTCaptchaTask,
   ReCaptchaV2Task,
@@ -37,7 +36,13 @@ export class Solver {
   private k: string;
   private pd: number;
 
-  constructor({ apiKey = process.env.APIKEY ?? '', pollDelay = 1700 }: SolverOptions) {
+  constructor({
+    apiKey = process.env.APIKEY ?? '',
+    pollDelay = 1700,
+  }: {
+    apiKey?: string;
+    pollDelay?: number;
+  }) {
     this.k = apiKey;
     this.pd = pollDelay;
   }

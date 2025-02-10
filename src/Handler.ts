@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SolverOptions, SolverApiResponse } from './types';
+import { SolverApiResponse } from './types';
 import { SolverTask } from './types/tasks';
 import { SolverError } from './errors';
 
@@ -8,7 +8,15 @@ export class Handler {
   private k: string | undefined;
   private mp: boolean;
 
-  constructor({ task, apiKey, mustPoll = true }: SolverOptions) {
+  constructor({
+    task,
+    apiKey,
+    mustPoll = true,
+  }: {
+    task: SolverTask;
+    apiKey?: string;
+    mustPoll?: boolean;
+  }) {
     this.t = task;
     this.k = apiKey;
     this.mp = mustPoll;
