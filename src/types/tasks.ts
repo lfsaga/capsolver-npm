@@ -1,6 +1,6 @@
 export interface BaseSolverTask {
   type: string;
-  proxy: string;
+  proxy?: string;
   websiteURL?: string;
   websiteKey?: string;
 }

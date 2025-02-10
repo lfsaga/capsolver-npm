@@ -1,6 +1,6 @@
 {
   "name": "capsolver-npm",
-  "version": "2.1.6",
+  "version": "2.1.9",
   "repository": "https://github.com/lfsaga/capsolver-npm",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

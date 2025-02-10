@@ -3,7 +3,6 @@
 manage to solve captcha challenges with node
 
 - ❗ API key it's **required** [**Get here**](https://dashboard.capsolver.com/passport/register?inviteCode=CHhA_5os)
-- 👌🏼 Now in Typescript
 
 [![npm version](https://img.shields.io/npm/v/capsolver-npm)](https://www.npmjs.com/package/capsolver-npm)
 [![](https://img.shields.io/badge/documentation-docs.capsolver.com-darkgreen)](https://docs.capsolver.com/guide/getting-started.html)
@@ -15,28 +14,29 @@ manage to solve captcha challenges with node
 ## Usage
 
 - Initialize and use `Solver` and `SolverError`
+- TS example:
 
 ```typescript
-const { Solver, SolverError } = require('capsolver-npm');
+import { Solver, SolverError } from 'capsolver-npm';
 
 const solver = new Solver({
   apiKey: 'CAP-XXXXXX ...',
 });
 
-async function main() {
+const main = async (): Promise<void> => {
   await solver
-    .recaptchav2({
-      //  parameters ...
+    .turnstileproxyless({
+      websiteURL: 'https://peet.ws/turnstile-test/non-interactive.html',
+      websiteKey: '...',
+      metadata: { action: 'login', cdata: 'xxxx-xxxx-xxxx-xxxx-example-cdata' },
     })
     .then((s: any) => {
       console.log(s);
     })
-    .catch((e: typeof SolverError) => {
-      console.log(
-        `taskId \x1b[33m${e.errorTaskId} \x1b[31m${e.errorCode} \x1b[0m(${e.errorDescription})`
-      );
+    .catch((e: SolverError) => {
+      console.error(`${e.errorTaskId} - ${e.errorCode} - ${e.errorDescription}`);
     });
-}
+};
 
 main();
 ```
